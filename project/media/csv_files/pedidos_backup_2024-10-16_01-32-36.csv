@@ -1,0 +1,33 @@
+ID,Cliente,Conductor,Servicio,Fecha Inicio,Fecha Fin,Estado
+107,cliente1,conductorp,Taxi,2024-10-14 16:10:36.386299+00:00,,Cancelado
+108,cliente1,driver,Camioneta,2024-10-14 16:13:31.355684+00:00,,En Progreso
+109,cliente1,conductorp,Taxi,2024-10-15 23:08:29.020362+00:00,,Cancelado
+128,cliente1,Sin asignar,Trufi,2024-10-16 00:55:42.321367+00:00,2024-10-16 00:55:52.659581+00:00,Cancelado
+129,cliente1,Sin asignar,Trufi,2024-10-16 00:57:15.988198+00:00,2024-10-16 00:57:18.343229+00:00,Cancelado
+130,cliente1,Sin asignar,Trufi,2024-10-16 00:57:41.464529+00:00,2024-10-16 00:58:31.733253+00:00,Cancelado
+110,cliente1,Sin asignar,Trufi,2024-10-15 23:20:24.020466+00:00,,cancelado
+131,cliente1,Sin asignar,Mototaxi,2024-10-16 01:00:11.449663+00:00,2024-10-16 01:00:16.915471+00:00,Cancelado
+111,cliente1,Sin asignar,Trufi,2024-10-15 23:32:34.923073+00:00,,Cancelado
+112,cliente1,Sin asignar,Camioneta,2024-10-15 23:33:44.898904+00:00,,Cancelado
+113,cliente1,Sin asignar,Mototaxi,2024-10-15 23:51:06.304648+00:00,,Cancelado
+132,cliente1,Sin asignar,Camioneta,2024-10-16 01:00:44.653690+00:00,2024-10-16 01:02:24.984915+00:00,Cancelado
+114,cliente1,Sin asignar,Camioneta,2024-10-15 23:58:47.970200+00:00,,Cancelado
+115,cliente1,Sin asignar,Trufi,2024-10-16 00:01:08.680376+00:00,,Cancelado
+116,cliente1,Sin asignar,Trufi,2024-10-16 00:06:04.902882+00:00,,Rechazado
+117,cliente1,Sin asignar,Trufi,2024-10-16 00:15:20.622413+00:00,,Rechazado
+118,cliente1,conductorp,Trufi,2024-10-16 00:19:35.584688+00:00,,En Progreso
+119,cliente1,Sin asignar,Trufi,2024-10-16 00:21:53.155102+00:00,,Rechazado
+120,cliente1,Sin asignar,Trufi,2024-10-16 00:28:42.721108+00:00,,Rechazado
+121,cliente1,Sin asignar,Trufi,2024-10-16 00:31:30.106129+00:00,,Rechazado
+122,cliente1,user7,Trufi,2024-10-16 00:33:29.537952+00:00,,Cancelado
+123,cliente1,Sin asignar,Trufi,2024-10-16 00:34:39.868744+00:00,2024-10-16 00:38:53.749835+00:00,Cancelado
+124,cliente1,Sin asignar,Camioneta,2024-10-16 00:39:31.158946+00:00,2024-10-16 00:50:51.108202+00:00,Cancelado
+125,cliente1,Sin asignar,Trufi,2024-10-16 00:52:27.453754+00:00,,Rechazado
+126,cliente1,Sin asignar,Camioneta,2024-10-16 00:52:54.422625+00:00,,Rechazado
+127,cliente1,Sin asignar,Mototaxi,2024-10-16 00:54:53.047974+00:00,2024-10-16 00:55:03.405310+00:00,Cancelado
+133,cliente1,Sin asignar,Mototaxi,2024-10-16 01:03:35.084998+00:00,,Rechazado
+134,cliente1,Sin asignar,Trufi,2024-10-16 01:06:20.791714+00:00,,Rechazado
+135,cliente1,Sin asignar,Taxi,2024-10-16 01:11:21.423385+00:00,,Rechazado
+168,cliente1,Sin asignar,Trufi,2024-10-16 01:20:20.393896+00:00,,Rechazado
+169,cliente1,Sin asignar,Trufi,2024-10-16 01:22:49.430127+00:00,2024-10-16 01:22:51.023640+00:00,Cancelado
+170,cliente1,conductorp,Trufi,2024-10-16 01:23:01.021816+00:00,,Cancelado

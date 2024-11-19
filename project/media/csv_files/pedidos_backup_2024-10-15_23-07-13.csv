@@ -1,0 +1,3 @@
+ID,Cliente,Conductor,Servicio,Fecha Inicio,Fecha Fin,Estado
+107,cliente1,conductorp,Taxi,2024-10-14 16:10:36.386299+00:00,,Cancelado
+108,cliente1,driver,Camioneta,2024-10-14 16:13:31.355684+00:00,,En Progreso

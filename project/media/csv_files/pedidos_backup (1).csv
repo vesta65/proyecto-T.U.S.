@@ -1,0 +1,106 @@
+ID,Cliente,Conductor,Servicio,Fecha Inicio,Fecha Fin,Estado
+3,user4,user8,Mototaxi,2024-08-12 00:25:16.988110+00:00,,Pendiente
+4,user4,user4,Mototaxi,2024-08-12 00:39:17.805102+00:00,,Pendiente
+5,user4,user8,Mototaxi,2024-08-12 00:44:38.135738+00:00,,Pendiente
+6,user7,user4,Mototaxi,2024-08-12 00:47:37.008110+00:00,,En Progreso
+7,user7,user4,Mototaxi,2024-08-12 00:53:59.675004+00:00,,En Progreso
+8,user7,user4,Mototaxi,2024-08-12 01:13:31.227191+00:00,,En Progreso
+9,cliente1,Sin asignar,Mototaxi,2024-08-12 02:35:23.073677+00:00,,
+10,cliente1,Sin asignar,Mototaxi,2024-08-12 02:37:14.126102+00:00,,
+11,cliente1,Sin asignar,Mototaxi,2024-08-12 02:37:31.560262+00:00,,
+12,cliente1,Sin asignar,Mototaxi,2024-08-12 02:38:00.368439+00:00,,
+13,cliente1,Sin asignar,Trufi,2024-08-12 02:38:45.337994+00:00,,
+14,cliente1,Sin asignar,Trufi,2024-08-12 02:41:40.553009+00:00,,pendiente
+15,cliente1,Sin asignar,Trufi,2024-08-12 02:54:02.351973+00:00,,pendiente
+16,cliente1,Sin asignar,Trufi,2024-08-12 13:04:48.503349+00:00,,pendiente
+17,cliente1,Sin asignar,Taxi,2024-08-12 13:05:19.057543+00:00,,pendiente
+18,cliente1,Sin asignar,Mototaxi,2024-08-12 13:09:34.013784+00:00,,pendiente
+19,cliente1,Sin asignar,Camioneta,2024-08-12 13:10:10.976165+00:00,,pendiente
+20,cliente1,Sin asignar,Camioneta,2024-08-12 13:10:42.891473+00:00,,pendiente
+21,cliente1,Sin asignar,Taxi,2024-08-12 13:39:59.911120+00:00,,pendiente
+22,cliente1,Sin asignar,Mototaxi,2024-08-12 13:48:46.444450+00:00,,pendiente
+25,cliente1,Sin asignar,Taxi,2024-08-12 13:53:00.966033+00:00,,pendiente
+2,user4,user4,Mototaxi,2024-08-12 00:19:44.102729+00:00,,Pendiente
+34,cliente1,user4,Camioneta,2024-08-12 23:22:10.359035+00:00,,pendiente
+33,cliente1,conductor1,Taxi,2024-08-12 22:11:50.630291+00:00,,pendiente
+31,cliente1,conductor1,Camioneta,2024-08-12 14:10:08.713542+00:00,,pendiente
+28,cliente1,conductor1,Camioneta,2024-08-12 14:01:38.663656+00:00,,pendiente
+32,cliente1,conductor1,Mototaxi,2024-08-12 14:11:10.034632+00:00,,pendiente
+29,cliente1,conductor1,Taxi,2024-08-12 14:03:41.598532+00:00,,En Progreso
+26,cliente1,conductor1,Taxi,2024-08-12 13:55:47.335263+00:00,,En Progreso
+36,cliente1,Sin asignar,Taxi,2024-08-14 21:50:34.038323+00:00,,pendiente
+37,cliente1,Sin asignar,Taxi,2024-08-15 12:53:29.351452+00:00,,pendiente
+38,cliente1,Sin asignar,Taxi,2024-08-15 13:06:06.434797+00:00,,pendiente
+23,cliente1,conductor1,Taxi,2024-08-12 13:49:12.853381+00:00,,pendiente
+24,cliente1,conductor1,Camioneta,2024-08-12 13:49:55.543464+00:00,,pendiente
+27,cliente1,conductor1,Taxi,2024-08-12 14:00:53.989638+00:00,,pendiente
+39,cliente1,Sin asignar,Camioneta,2024-08-15 13:23:10.723651+00:00,,pendiente
+35,cliente1,conductor1,Mototaxi,2024-08-12 23:22:36.562157+00:00,,pendiente
+30,cliente1,conductor1,Trufi,2024-08-12 14:04:35.777356+00:00,,pendiente
+40,cliente1,Sin asignar,Mototaxi,2024-08-15 13:24:26.995300+00:00,,pendiente
+41,cliente1,Sin asignar,Camioneta,2024-08-15 13:25:54.536615+00:00,,pendiente
+42,cliente1,Sin asignar,Taxi,2024-08-15 13:31:43.516208+00:00,,pendiente
+43,cliente1,Sin asignar,Camioneta,2024-08-15 13:49:59.141466+00:00,,pendiente
+44,cliente1,Sin asignar,Mototaxi,2024-08-15 13:50:39.840594+00:00,,pendiente
+45,cliente1,Sin asignar,Camioneta,2024-08-15 14:28:18.444932+00:00,,pendiente
+46,cliente1,Sin asignar,Taxi,2024-08-15 14:31:19.633648+00:00,,pendiente
+47,cliente1,Sin asignar,Taxi,2024-08-15 14:55:28.771476+00:00,,pendiente
+48,cliente1,Sin asignar,Taxi,2024-08-15 14:55:55.529895+00:00,,pendiente
+49,cliente1,Sin asignar,Taxi,2024-08-15 15:07:28.861746+00:00,,pendiente
+51,cliente1,Sin asignar,Taxi,2024-08-15 15:49:34.147842+00:00,,pendiente
+50,cliente1,conductor1,Taxi,2024-08-15 15:42:24.096448+00:00,,En Progreso
+52,cliente1,Sin asignar,Taxi,2024-08-18 21:25:59.124104+00:00,,pendiente
+53,cliente1,Sin asignar,Mototaxi,2024-08-18 21:45:50.244363+00:00,,pendiente
+54,cliente1,Sin asignar,Taxi,2024-08-18 22:33:26.175732+00:00,,pendiente
+55,cliente1,Sin asignar,Mototaxi,2024-08-18 22:34:03.479592+00:00,,pendiente
+56,cliente1,Sin asignar,Mototaxi,2024-08-18 22:36:42.577609+00:00,,pendiente
+57,cliente1,Sin asignar,Taxi,2024-08-18 22:36:48.991052+00:00,,pendiente
+63,cliente1,conductor3,Taxi,2024-08-18 22:45:24.191012+00:00,,En Progreso
+62,cliente1,driver,Camioneta,2024-08-18 22:45:12.317063+00:00,2024-08-22 22:17:28.429804+00:00,Completado
+61,cliente1,conductorp,Taxi,2024-08-18 22:44:53.962297+00:00,2024-09-11 00:35:52.295885+00:00,Completado
+60,cliente1,conductorp,Trufi,2024-08-18 22:41:08.914487+00:00,2024-09-11 01:54:30.630534+00:00,Completado
+59,cliente1,conductorp,Taxi,2024-08-18 22:38:47.457358+00:00,,En Progreso
+58,cliente1,conductorp,Taxi,2024-08-18 22:38:01.016145+00:00,,En Progreso
+86,cliente1,Sin asignar,Camioneta,2024-09-08 20:18:37.305613+00:00,,Cancelado
+67,cliente1,conductorp,Mototaxi,2024-08-18 22:53:03.498025+00:00,2024-08-19 00:26:32.737296+00:00,Completado
+66,cliente1,conductorp,Camioneta,2024-08-18 22:52:39.853272+00:00,2024-08-19 00:40:16.503803+00:00,Completado
+65,cliente1,conductorp,Trufi,2024-08-18 22:51:41.013590+00:00,2024-08-19 00:49:40.453702+00:00,Completado
+68,cliente1,conductorp,Taxi,2024-08-19 01:54:35.234717+00:00,2024-08-19 02:15:08.446083+00:00,Completado
+69,cliente1,conductorp,Camioneta,2024-08-19 02:02:16.652593+00:00,2024-08-19 02:15:14.876699+00:00,Completado
+70,cliente1,conductorp,Taxi,2024-08-19 02:04:27.198147+00:00,2024-08-19 02:15:15.845513+00:00,Completado
+71,cliente1,conductorp,Taxi,2024-08-19 02:09:41.660245+00:00,2024-08-19 02:15:16.965909+00:00,Completado
+72,cliente1,conductorp,Taxi,2024-08-19 02:11:44.772144+00:00,2024-08-19 02:15:17.962042+00:00,Completado
+75,cliente1,conductorp,Camioneta,2024-08-21 04:04:13.803445+00:00,2024-08-21 04:05:57.692148+00:00,Completado
+73,cliente1,conductorp,Taxi,2024-08-19 02:17:11.768045+00:00,2024-08-22 01:47:30.221356+00:00,Completado
+78,cliente1,conductor3,Camioneta,2024-08-22 02:38:19.993411+00:00,,En Progreso
+79,cliente1,conductor3,Taxi,2024-08-22 02:43:27.506525+00:00,,En Progreso
+80,cliente1,conductor3,Taxi,2024-08-22 02:56:43.533992+00:00,,En Progreso
+74,cliente1,conductorp,Trufi,2024-08-21 03:43:16.817008+00:00,2024-08-22 03:21:54.471466+00:00,Completado
+64,cliente1,user4,Taxi,2024-08-18 22:46:47.975416+00:00,,En Progreso
+81,cliente1,driver,Taxi,2024-08-22 22:16:06.996621+00:00,,En Progreso
+87,cliente1,Sin asignar,Trufi,2024-09-08 20:20:01.318435+00:00,,Cancelado
+84,cliente1,Sin asignar,Trufi,2024-09-08 20:12:10.781507+00:00,,Cancelado
+85,cliente1,Sin asignar,Taxi,2024-09-08 20:14:03.286009+00:00,,Cancelado
+76,cliente1,conductorp,Trufi,2024-08-21 13:50:35.378454+00:00,2024-09-08 21:19:21.360495+00:00,Completado
+82,cliente1,conductorp,Taxi,2024-09-08 19:59:43.304410+00:00,2024-09-08 21:19:22.536654+00:00,Completado
+77,cliente1,conductorp,Camioneta,2024-08-22 01:44:16.306323+00:00,2024-09-08 21:19:23.513779+00:00,Completado
+83,cliente1,conductorp,Taxi,2024-09-08 20:07:12.455668+00:00,2024-09-08 21:19:24.478646+00:00,Completado
+88,cliente1,conductorp,Trufi,2024-09-08 21:17:44.060949+00:00,2024-09-08 21:19:25.267647+00:00,Completado
+89,cliente1,conductorp,Mototaxi,2024-09-08 21:27:12.158009+00:00,,Cancelado
+90,cliente1,conductorp,Trufi,2024-09-08 21:36:06.276645+00:00,,Cancelado
+91,cliente1,Sin asignar,Taxi,2024-09-10 23:17:15.850481+00:00,2024-09-10 23:17:27.823710+00:00,Cancelado
+92,cliente1,Sin asignar,Mototaxi,2024-09-11 01:07:41.918692+00:00,2024-09-11 01:07:52.615528+00:00,Cancelado
+93,cliente1,Sin asignar,Trufi,2024-09-11 01:12:51.852754+00:00,2024-09-11 01:13:07.959592+00:00,Cancelado
+94,cliente1,Sin asignar,Camioneta,2024-09-11 01:32:28.121238+00:00,2024-09-11 01:33:03.059571+00:00,Cancelado
+95,cliente1,Sin asignar,Trufi,2024-09-11 01:33:09.251391+00:00,2024-09-11 01:34:31.247769+00:00,Cancelado
+97,cliente1,Sin asignar,Mototaxi,2024-09-11 01:51:20.203251+00:00,2024-09-11 01:51:25.455461+00:00,Cancelado
+96,cliente1,conductorp,Taxi,2024-09-11 01:34:43.004404+00:00,2024-09-11 01:54:31.922789+00:00,Completado
+98,cliente1,Sin asignar,Trufi,2024-09-11 02:01:59.828043+00:00,2024-09-11 02:02:13.887159+00:00,Cancelado
+99,cliente1,Sin asignar,Trufi,2024-09-11 02:08:13.911772+00:00,2024-09-11 02:08:33.600757+00:00,Cancelado
+100,cliente1,Sin asignar,Taxi,2024-09-22 19:13:01.559066+00:00,2024-09-22 19:13:09.873924+00:00,Cancelado
+101,cliente1,conductorp,Mototaxi,2024-09-22 19:14:22.224534+00:00,,Cancelado
+102,cliente1,Sin asignar,Camioneta,2024-09-26 19:01:11.874159+00:00,2024-09-26 19:08:32.969464+00:00,Cancelado
+103,cliente1,Sin asignar,Taxi,2024-10-02 15:55:53.348111+00:00,2024-10-02 15:56:04.727432+00:00,Cancelado
+104,cliente1,Sin asignar,Camioneta,2024-10-03 02:21:12.516816+00:00,2024-10-03 02:21:15.215549+00:00,Cancelado
+105,cliente1,conductorp,Taxi,2024-10-03 22:51:41.334065+00:00,,En Progreso
+106,cliente1,Sin asignar,Taxi,2024-10-03 22:52:25.298313+00:00,2024-10-03 22:52:32.501407+00:00,Cancelado
