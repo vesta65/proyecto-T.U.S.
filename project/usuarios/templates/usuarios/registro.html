@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load crispy_forms_tags %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa; /* Color de fondo del cuerpo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh; /* Ocupa como mínimo toda la altura de la ventana */
+            margin: 0; /* Elimina el margen por defecto */
+        }
+        .container {
+            max-width: 400px; /* Ancho máximo del formulario */
+            width: 100%; /* Ancho completo del contenedor en pantallas pequeñas */
+            padding: 20px; /* Añade espacio dentro del formulario */
+            background-color: #fff; /* Color de fondo del formulario */
+            border-radius: 8px; /* Bordes redondeados */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+            position: relative; /* Permite el posicionamiento relativo */
+        }
+        .close-button {
+            position: absolute; /* Posicionamiento absoluto */
+            top: 10px; /* Distancia desde la parte superior */
+            right: 10px; /* Distancia desde la derecha */
+            font-size: 1.5rem; /* Tamaño de fuente */
+            color: #dc3545; /* Color del texto */
+            border: none; /* Sin borde */
+            background: none; /* Fondo transparente */
+            cursor: pointer; /* Cambia el cursor a un puntero al pasar por encima */
+            transition: color 0.3s ease; /* Transición suave del color del texto */
+        }
+        .close-button:hover {
+            color: #c82333; /* Color del texto al pasar el cursor */
+        }
+        h2 {
+            text-align: center; /* Centra el título del formulario */
+            margin-bottom: 20px; /* Espacio inferior al título */
+            font-size: 1.5rem; /* Tamaño de fuente del título */
+            font-weight: bold; /* Negrita para el título */
+        }
+        button[type="submit"] {
+            width: 100%; /* Ocupa todo el ancho del botón */
+            margin-top: 10px; /* Espacio superior al botón */
+        }
+        .form-group label {
+            font-weight: 600; /* Negrita para las etiquetas del formulario */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'home' %}" class="close-button">&times;</a>
+        <h2>Registro</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">Registrar</button>
+        </form>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

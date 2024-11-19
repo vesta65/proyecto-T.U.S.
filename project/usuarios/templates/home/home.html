@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    <link rel="manifest" href="{% static 'manifest.json' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos del cuerpo */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #1f2b52, #4b578e);
+            color: #f0f0f0;
+            padding-top: 70px;
+        }
+        
+        /* Barra de navegación */
+        .navbar-custom {
+            background: linear-gradient(90deg, #0056b3, #003d82);
+            color: white;
+            box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .navbar-brand {
+            font-size: 1.7rem;
+            font-weight: bold;
+            color: #ffffff !important;
+        }
+        .navbar-text, .btn-outline-light {
+            color: #ffffff;
+        }
+
+        /* Imagen de perfil */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 4px solid #ffffff;
+        }
+
+        /* Mensaje de bienvenida */
+        .welcome-message {
+            margin-top: 10vh;
+            text-align: center;
+        }
+
+        /* Estilos para botones */
+        .btn-custom {
+            font-size: 1.2rem;
+            padding: 12px 28px;
+            border-radius: 8px;
+            margin-top: 20px;
+            color: #ffffff;
+            transition: background 0.3s, transform 0.2s;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .btn-custom-primary {
+            background-color: #28a745;
+            border: none;
+        }
+        .btn-custom-primary:hover {
+            background-color: #218838;
+            transform: translateY(-3px);
+        }
+        .btn-custom-secondary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-custom-secondary:hover {
+            background-color: #0069d9;
+            transform: translateY(-3px);
+        }
+
+        /* Contenedor */
+        .container {
+            max-width: 960px;
+        }
+
+        /* Contenedor centrado para los botones */
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Adaptación para dispositivos móviles */
+        @media (max-width: 576px) {
+            .btn-custom {
+                width: 80%;
+                font-size: 1rem;
+            }
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <a class="navbar-brand" href="#">SINDICATO DE RADIO TAXIS URINZAYA</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav ml-auto">
+                {% if user.is_authenticated %}
+                    <span class="navbar-text">Bienvenido, {{ user.username }}</span>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-light ml-2">Cerrar sesión</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <!-- Welcome Message and Profile Image -->
+    <div class="container welcome-message">
+        {% if user.is_authenticated %}
+            {% if user.profile_image %}
+                <img src="{{ user.profile_image.url }}" alt="Imagen de perfil" class="profile-image">
+            {% else %}
+                <img src="{% static 'images/default_profile.png' %}" alt="Imagen de perfil predeterminada" class="profile-image">
+            {% endif %}
+            <h2>Bienvenido, {{ user.username }}</h2>
+        {% else %}
+            <div class="center-content">
+                <h2>¡Bienvenido!</h2>
+                <a class="btn btn-custom btn-custom-secondary" href="{% url 'loginweb' %}">Iniciar Sesión</a>
+            </div>
+        {% endif %}
+    </div>
+
+    <!-- Centered Content for Admin or Superuser -->
+    <div class="container center-content">
+        {% if user.is_authenticated %}
+            {% if user.is_superuser or user.id_rol.nombre == 'admin' %}
+                <a class="btn btn-custom btn-custom-primary" href="{% url 'panelinicio' %}">Panel de Administración</a>
+                <a class="btn btn-custom btn-custom-secondary" href="{% url 'add_pedido' %}">Ingresar a App</a>
+            {% endif %}
+            {% if user.is_superuser or user.id_rol.nombre == 'comun' %}
+                <a class="btn btn-custom btn-custom-primary" href="{% url 'inicio' %}">Ingresar a App</a>
+            {% endif %}
+            {% if request.user.is_authenticated and request.user.conductor %}
+                <a class="btn btn-custom btn-custom-secondary" href="{% url 'inicio' %}">Inicio Conductor</a>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Service Worker Registration -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('{% static 'service-worker.js' %}')
+                    .then((registration) => {
+                        console.log('ServiceWorker registrado con éxito:', registration);
+                    })
+                    .catch((error) => {
+                        console.log('Error al registrar el ServiceWorker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

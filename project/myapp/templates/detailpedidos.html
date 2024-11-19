@@ -1,0 +1,112 @@
+{% extends 'basem.html' %}
+
+{% block title %}Detalle del Pedido{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        padding: 15px;
+        margin: auto;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    .pedido-detail {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .pedido-detail h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .pedido-detail p {
+        font-size: 16px;
+        margin: 5px 0;
+        color: #555;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 20px;
+        }
+
+        .pedido-detail h3 {
+            font-size: 18px;
+        }
+
+        .pedido-detail p {
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    }
+</style>
+
+<div class="container mt-5">
+    <h2>Detalle del Pedido #{{ pedido.id }}</h2>
+
+    <div class="pedido-detail">
+        <h3>Cliente</h3>
+        <p>{{ pedido.cliente.user.username }}</p>
+
+        <h3>Servicio</h3>
+        <p>{{ pedido.servicio.nombre }}</p>
+
+        <h3>Fecha y Hora de Inicio</h3>
+        <p>{{ pedido.fecha_hora_inicio }}</p>
+
+        <h3>Fecha y Hora de Fin</h3>
+        <p>{{ pedido.fecha_hora_fin|default:"No completado" }}</p>
+
+        <h3>Estado</h3>
+        <p>
+            <span class="badge bg-{{ pedido.estado|lower }}">
+                {{ pedido.estado }}
+            </span>
+        </p>
+
+        <h3>Origen</h3>
+        <p>
+            <a href="{{ pedido.origen }}" target="_blank">{{ pedido.origen }}</a>
+        </p>
+
+        <a href="{% url 'pedidos_usuario' %}" class="btn btn-primary">Volver a Mis Pedidos</a>
+    </div>
+</div>
+
+{% endblock %}

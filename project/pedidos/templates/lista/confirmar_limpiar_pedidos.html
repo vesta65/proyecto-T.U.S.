@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmar Limpieza de Pedidos</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Confirmar Limpieza de Pedidos</h1>
+        <p class="text-danger">¡Advertencia! Esta acción eliminará todos los pedidos de la base de datos. se recomienda guardar los registros antes de continuar con la accion ¿Estás seguro de que deseas continuar?</p>
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Eliminar Todos los Pedidos</button>
+            <a href="{% url 'panelinicio' %}" class="btn btn-secondary">Cancelar</a>
+        </form>
+    </div>
+</body>
+</html>

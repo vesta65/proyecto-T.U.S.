@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    {% load static %}
+    {% load crispy_forms_tags %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Panel de Control{% endblock %}</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #1a1a2e;
+            background-image: url("{% static 'images/fondo7.png' %}");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #f0f0f0;
+        }
+        
+        /* Contenedor principal */
+        .wrapper {
+            display: flex;
+            flex-grow: 1;
+        }
+        
+        /* Barra lateral */
+        .sidebar {
+            width: 250px;
+            background-color: #1d1f38;
+            color: #f0f0f0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 3px 0 6px rgba(0, 0, 0, 0.3);
+            border-top-right-radius: 8px;
+            border-bottom-right-radius: 8px;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar .user-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .sidebar .user-info img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+            border: 3px solid #f0f0f0;
+        }
+        
+        .sidebar .user-info h5 {
+            margin: 0;
+            font-size: 1.1em;
+            color: #e1e1e1;
+        }
+        
+        .sidebar .nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar .nav .nav-item {
+            margin-bottom: 12px;
+        }
+        
+        .sidebar .nav a {
+            color: #e1e1e1;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            display: flex;
+            align-items: center;
+            font-size: 1em;
+        }
+        
+        .sidebar .nav a:hover, .sidebar .nav a.active {
+            background-color: #1f4068;
+            color: #ffffff;
+            font-weight: bold;
+            box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Contenido principal */
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 250px; /* Para evitar que el contenido se superponga a la barra lateral */
+        }
+        
+        /* Cabecera */
+        .header {
+            background-color: #1b1b2f;
+            color: #f0f0f0;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .header .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e1e1e1;
+            text-transform: uppercase;
+        }
+        
+        .header .logout-btn {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+        
+        .header .logout-btn:hover {
+            color: #ff6b6b;
+        }
+        
+        /* Notificación */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 8px;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            font-size: 0.9rem;
+        }
+        
+        /* Pie de página */
+        .footer {
+            background-color: #1b1b2f;
+            color: #e1e1e1;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 0.875rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer a {
+            color: #f0f0f0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer a:hover {
+            color: #ff6b6b;
+            text-decoration: underline;
+        }
+        
+        .footer-image {
+            width: 100%;
+            height: auto;
+            max-width: 200px;
+            display: block;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+        
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <div class="header">
+        <h4>{% block header_title %}Panel de Control{% endblock %}</h4>
+        <div>
+            {% if user.is_authenticated %}
+                <span class="navbar-text mr-3">Bienvenido, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="btn btn-outline-light logout-btn">Cerrar sesión</a>
+            {% else %}
+                <a href="{% url 'loginweb' %}" class="btn btn-outline-light logout-btn">Iniciar sesión</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <nav class="sidebar">
+            <div class="user-info">
+                <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}https://via.placeholder.com/100{% endif %}" alt="Imagen del Usuario" class="user-image">
+                <h5 class="user-name">{{ user.username }}</h5>
+            </div>
+            <ul class="nav">
+                {% block sidebar %}
+                <li class="nav-item"><a href="{% url 'lista_usuarios_comunes' %}" class="nav-link">Ver Clientes</a></li>
+                <li class="nav-item"><a href="{% url 'panelinicio' %}" class="nav-link">Ver todos los Registros</a></li>
+                <li class="nav-item"><a href="{% url 'pedidos_list' %}" class="nav-link">Pedidos Entrantes</a></li>
+                <li class="nav-item"><a href="{% url 'pedidos_con_conductor' %}" class="nav-link">Pedidos Confirmados</a></li>
+                {% endblock %}
+            </ul>
+            <div class="sidebar-footer">                
+                <img src="{% static 'images/logo5.png' %}" alt="Imagen sin fondo" class="footer-image">
+            </div>
+        </nav>
+        
+
+        <main class="content">
+            {% block content %}
+            <!-- Aquí va el contenido de la vista -->
+            {% endblock %}
+        </main>
+    </div>
+
+    <div class="notification" id="notification">¡Nuevo pedido recibido!</div>
+
+    <footer class="footer">
+        <p>&copy; 2024 Sindicato de Taxis URINZAYA</p>
+    </footer>
+
+</body>
+</html>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        let lastKnownId = localStorage.getItem('lastKnownOrderId') || 0;
+
+        function mostrarNotificacion() {
+            const notification = document.getElementById('notification');
+            notification.style.display = 'block';
+            setTimeout(() => notification.style.display = 'none', 5000);
+        }
+
+        function actualizarPedidos() {
+            fetch('/pedidos-json/')
+                .then(response => response.json())
+                .then(data => {
+                    data.pedidos.sort((a, b) => new Date(b.fecha_hora_inicio) - new Date(a.fecha_hora_inicio));
+                    const newLastKnownId = data.pedidos[0] ? data.pedidos[0].id : 0;
+                    if (newLastKnownId > lastKnownId) {
+                        lastKnownId = newLastKnownId;
+                        localStorage.setItem('lastKnownOrderId', lastKnownId);
+                        mostrarNotificacion();
+                    }
+                })
+                .catch(error => console.error('Error al cargar los pedidos:', error));
+        }
+
+        setInterval(actualizarPedidos, 10000);
+        document.addEventListener('DOMContentLoaded', actualizarPedidos);
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

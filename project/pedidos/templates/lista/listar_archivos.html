@@ -1,0 +1,32 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}Lista de Archivos CSV{% endblock %}
+
+{% block header_title %}Archivos CSV{% endblock %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Archivos CSV</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Lista de Archivos CSV</h1>
+        <ul class="list-group">
+            {% for archivo in archivos %}
+                <li class="list-group-item">
+                    <a href="{% url 'ver_archivo' archivo %}">{{ archivo }}</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No hay archivos CSV disponibles.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
+
+{% endblock %}

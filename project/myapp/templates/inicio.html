@@ -1,0 +1,52 @@
+{% extends 'basem.html' %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block header %}
+    Proyecto Tecnico de grado
+{% endblock %}
+
+{% block content %}
+<style>
+
+    .btn-custom {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 12px 24px;
+        font-size: 1.125rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #0056b3;
+    }
+    .footer-image {
+        width: 100%;
+        height: auto;
+        max-width: 300px; /* Ajusta según tus necesidades */
+        display: block;
+        margin: 0 auto;
+    }
+</style>
+{% load static %}
+
+    <div class="text-center">
+        <h2>Bienvenido al Sindicato de Radiotrasporte</h2>
+        <h2>URINZAYA</h2>
+
+        <p>Gracias por elegir nuestro servicio de transporte. Aquí puedes solicitar un transporte de manera rápida y sencilla desde la comodidad de tu dispositivo móvil.</p>
+              
+        <div class="sidebar-footer">                
+            <img src="{% static 'images/logo5.png' %}" alt="Imagen sin fondo" class="footer-image">
+        </div>
+        {% if request.user.is_authenticated and request.user.cliente %}
+            <a href="{% url 'add_pedido' %}" class="btn btn-custom btn-lg">Solicitar Servicio</a>
+        {% endif %}
+
+        {% if request.user.is_authenticated and request.user.conductor %}
+            <a class="btn btn-info" href="{% url 'pedidos_conductor' %}">Ver Pedidos Asignados</a>
+        {% endif %}
+    </div>
+{% endblock %}

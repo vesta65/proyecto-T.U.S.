@@ -1,0 +1,114 @@
+{% extends 'basem.html' %}
+
+{% block title %}Detalle del Pedido{% endblock %}
+
+{% block header_title %}Detalle del Pedido{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        padding: 15px;
+        margin: auto;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+    }
+
+    .pedido-detail {
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        background-color: #ffffff;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+
+    .pedido-detail h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+    .pedido-detail p {
+        font-size: 16px;
+        margin: 5px 0;
+        color: #555;
+    }
+
+    .pedido-detail img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 10px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 16px;
+        transition: background-color 0.3s;
+        display: block;
+        width: 100%;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        h2 {
+            font-size: 20px;
+        }
+
+        .pedido-detail h3 {
+            font-size: 18px;
+        }
+
+        .pedido-detail p {
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    }
+</style>
+
+<div class="container">
+
+    <div class="pedido-detail">
+        <h3>Pedido ID: {{ pedido.id }}</h3>
+        <p><strong>Cliente:</strong> {{ pedido.cliente.user.username }}</p>
+        <p><strong>Servicio:</strong> {{ pedido.servicio.nombre }}</p>
+        <p><strong>Fecha y Hora Inicio:</strong> {{ pedido.fecha_hora_inicio }}</p>
+        <p><strong>Fecha y Hora Fin:</strong> {{ pedido.fecha_hora_fin }}</p>
+        <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+        <p><strong>Origen:</strong> <a href="{{ pedido.origen }}" target="_blank">Ver Ubicación</a></p>
+
+        <h4>Información del Cliente:</h4>
+        <p><strong>Nombre:</strong> {{ pedido.cliente.user.username }}</p>
+        <p><strong>Teléfono:</strong> {{ pedido.cliente.user.telf }}</p>
+        <p><strong>Edad:</strong> {{ pedido.cliente.user.edad }}</p>
+        {% if pedido.cliente.user.profile_image %}
+            <img src="{{ pedido.cliente.user.profile_image.url }}" alt="Imagen de Perfil">
+        {% else %}
+            <p>No hay imagen de perfil.</p>
+        {% endif %}
+
+    </div>
+
+    <a class="btn btn-primary" href="{% url 'pedidos_conductor' %}">Volver a Pedidos Asignados</a>
+</div>
+{% endblock %}

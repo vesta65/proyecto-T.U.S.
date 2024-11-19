@@ -1,0 +1,235 @@
+{% extends 'basem.html' %}
+
+{% block title %}Crear Pedido{% endblock %}
+
+{% block content %}
+<style>
+    /* Estilos generales */
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        background-color: #f4f4f4;
+    }
+
+    .form-content {
+        width: 100%;
+        max-width: 480px;
+        margin: 20px auto;
+        padding: 20px;
+        box-sizing: border-box;
+        background: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    .servicio-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .servicio-item {
+        flex: 1 1 calc(50% - 10px); /* Dos botones por fila */
+        max-width: calc(50% - 10px); /* Ajuste de tamaño para el espacio */
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        overflow: hidden;
+        text-align: center;
+        cursor: pointer;
+        transition: transform 0.3s, background-color 0.3s, border-color 0.3s;
+        background: #ffffff;
+        padding: 8px; /* Reduce el padding */
+        box-sizing: border-box;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .servicio-item:hover {
+        transform: scale(1.03);
+        background-color: #f8f9fa;
+        border-color: #007bff;
+    }
+
+    .servicio-item img {
+        width: 20%;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .servicio-item p {
+        margin: 10px 0 0;
+        font-weight: 600;
+        color: #333;
+        font-size: 14px;
+    }
+
+    .form-group {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="url"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        font-size: 16px;
+        color: #495057;
+        background-color: #f9f9f9;
+        transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    .form-group input[type="text"]:focus,
+    .form-group input[type="url"]:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+    .btn2 {
+        width: 100%;
+        padding: 12px;
+        background-color: #28a745; /* Verde para el botón de ubicación */
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+    .btn {
+        width: 100%;
+        padding: 12px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 20px;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .btn:hover {
+        background-color: #0056b3;
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active {
+        background-color: #004494;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3) inset;
+        transform: translateY(2px);
+    }
+
+    /* Media Queries */
+    @media (max-width: 576px) {
+        .servicio-item {
+            flex: 1 1 100%;
+            max-width: 100%;
+        }
+
+        .form-content {
+            padding: 10px;
+        }
+
+        .btn {
+            font-size: 16px;
+        }
+
+        .servicio-item img {
+            height: 60px;
+        }
+    }
+</style>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            {% load static %}
+            {% for servicio in servicios %}
+                    <label class="servicio-item d-block">
+                        <input type="radio" name="servicio" value="{{ servicio.id }}" required style="display:none;">
+                        <img src="{% static 'images/'|add:servicio.nombre|add:'.png' %}" alt="{{ servicio.nombre }}">
+                        <p>{{ servicio.nombre }}</p>
+                    </label>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.origen.label_tag }}
+            <div style="display: flex; align-items: center;">
+                {{ form.origen }}
+                <button type="button" class="btn2" style="margin-left: 10px;" onclick="requestLocationPermission()">Usar mi ubicación</button>
+            </div>
+        </div>
+        <button type="submit" class="btn">Pedir</button>
+    </form>
+
+
+<script>
+    function requestLocationPermission() {
+        if (navigator.geolocation) {
+            navigator.permissions.query({ name: 'geolocation' }).then(function(permissionStatus) {
+                if (permissionStatus.state === 'denied') {
+                    alert("El acceso a la ubicación ha sido denegado. Por favor, permite el acceso a la ubicación en la configuración de tu navegador.");
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    function(position) {
+                        var latitude = position.coords.latitude;
+                        var longitude = position.coords.longitude;
+                        var locationURL = "https://www.google.com/maps?q=" + latitude + "," + longitude;
+                        document.querySelector('input[name="origen"]').value = locationURL;
+                    },
+                    function(error) {
+                        switch(error.code) {
+                            case error.PERMISSION_DENIED:
+                                alert("Permiso denegado. Debes permitir el acceso a la ubicación para usar esta función.");
+                                break;
+                            case error.POSITION_UNAVAILABLE:
+                                alert("La información de ubicación no está disponible. Intenta nuevamente.");
+                                break;
+                            case error.TIMEOUT:
+                                alert("La solicitud para obtener la ubicación ha caducado. Intenta nuevamente.");
+                                break;
+                            case error.UNKNOWN_ERROR:
+                                alert("Ocurrió un error desconocido. Por favor, inténtalo de nuevo.");
+                                break;
+                        }
+                    }
+                );
+            }).catch(function(error) {
+                alert("Ocurrió un error al solicitar el permiso de ubicación.");
+            });
+        } else {
+            alert("La geolocalización no es soportada por este navegador.");
+        }
+    }
+</script>
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}

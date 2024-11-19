@@ -1,0 +1,176 @@
+{% extends 'panel/base.html' %}
+
+{% load static %}
+
+{% block title %}Lista de Vehículos{% endblock %}
+
+{% block header_title %}Lista de Vehículos{% endblock %}
+
+{% block content %}
+<head>
+<style>
+    .table-container {
+        max-height: 670px; /* Altura máxima del contenedor de la tabla */
+        overflow-y: auto; /* Desplazamiento vertical si el contenido excede la altura máxima */
+        border: 1px solid #dee2e6; /* Borde para el contenedor de la tabla */
+        border-radius: 4px; /* Bordes redondeados */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para el contenedor */
+        background-color: #ffffff;
+    }
+
+    .vehicle-image {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: transform 0.2s;
+    }
+
+    .vehicle-image:hover {
+        transform: scale(1.1); /* Zoom en la imagen al pasar el cursor */
+    }
+
+    .modal-dialog {
+        max-width: 80%; /* Ajusta el tamaño del modal */
+    }
+
+    .modal-body img {
+        width: 100%;
+        height: auto;
+    }
+
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-regresar {
+        margin-top: 20px;
+    }
+
+    .container {
+        background-color: transparent;
+        /* Reset other styles if needed */
+    }
+
+    /* Estilos para el estado de los vehículos */
+    .estado-activo {
+        background-color: #28a745; /* Verde para activo */
+        color: white;
+    }
+
+    .estado-inactivo {
+        background-color: #dc3545; /* Rojo para inactivo */
+        color: white;
+    }
+</style>
+</head>
+<a class="btn btn-success btn-lg" href="{% url 'lista_usuarios_comunes' %}">Ver Clientes</a>
+<a class="btn btn-primary btn-lg" href="{% url 'lista_usuarios' %}">Ver Usuarios</a>
+<a class="btn btn-info btn-lg" href="{% url 'lista_conductores' %}">Ver Conductores</a>
+<a class="btn btn-warning btn-lg" href="{% url 'lista_vehiculos' %}">Ver Vehículos</a>
+
+<br>
+</br>
+<br>
+</br>
+
+    <div class="table-container">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Estado</th>
+                        <th>Placa</th>
+                        <th>Modelo</th>
+                        <th>Color</th>
+                        <th>Año</th>
+                        <th>Conductor</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if vehiculos %}
+                        {% for vehiculo in vehiculos %}
+                            <tr>
+                                <td>
+                                    {% if vehiculo.imagen %}
+                                        <img src="{{ vehiculo.imagen.url }}" alt="Imagen del Vehículo" class="vehicle-image" data-toggle="modal" data-target="#imageModal" data-image="{{ vehiculo.imagen.url }}">
+                                    {% else %}
+                                        <img src="{% static 'images/default-vehicle.png' %}" alt="Imagen del Vehículo" class="vehicle-image" data-toggle="modal" data-target="#imageModal" data-image="{% static 'images/default-vehicle.png' %}">
+                                    {% endif %}
+                                </td>
+                                <td class="{% if vehiculo.estado == 'activo' %}estado-activo{% else %}estado-inactivo{% endif %}">
+                                    {{ vehiculo.estado }}
+                                </td>
+                                <td>{{ vehiculo.placa }}</td>
+                                <td>{{ vehiculo.modelo }}</td>
+                                <td>{{ vehiculo.color }}</td>
+                                <td>{{ vehiculo.anio }}</td>
+                                <td>{{ vehiculo.conductor.user.username }}</td>
+                                <td>
+                                    <a href="{% url 'editar_vehiculo' vehiculo.id %}" class="btn btn-primary btn-sm">Editar info del vehículo</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">No hay vehículos registrados.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <a class="btn btn-primary btn-lg btn-regresar mt-3" href="{% url 'panelinicio' %}">Regresar</a>
+
+<!-- Modal para mostrar la imagen en grande -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Imagen del Vehículo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <img src="" id="modalImage" alt="Imagen del Vehículo">
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+<!-- Puedes añadir CSS adicional aquí -->
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    // JavaScript para actualizar la fuente de la imagen en el modal
+    $('#imageModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        var imageSrc = button.data('image'); // Extract info from data-* attributes
+        var modal = $(this);
+        modal.find('#modalImage').attr('src', imageSrc);
+    });
+</script>
+{% endblock %}

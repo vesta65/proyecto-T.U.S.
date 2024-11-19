@@ -1,0 +1,26 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}Editar Información del Vehículo{% endblock %}
+
+{% block header_title %}Editar Información del Vehículo{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container mt-5">
+    <div class="form-container">
+        <h2 class="mb-4">Editar Información del Vehículo</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </form>
+        <a class="btn btn-secondary btn-regresar" href="{% url 'lista_conductores' %}">Regresar</a>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

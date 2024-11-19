@@ -1,0 +1,64 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block header_title %}Registro{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+<div class="container">
+    <a href="{% url 'lista_usuarios' %}" class="close-button">&times;</a>
+    <div class="form-container">
+        <h2>Registro</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button class="btn btn-primary" type="submit">Registrar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .container {
+        max-width: 400px; /* Ancho máximo del formulario */
+        margin: auto; /* Centra el formulario en la página */
+        padding: 20px; /* Añade espacio dentro del formulario */
+        background-color: #fff; /* Color de fondo del formulario */
+        border-radius: 5px; /* Bordes redondeados */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        position: relative; /* Permite el posicionamiento relativo */
+    }
+    .close-button {
+        position: absolute; /* Posicionamiento absoluto */
+        top: 10px; /* Distancia desde la parte superior */
+        right: 10px; /* Distancia desde la derecha */
+        padding: 5px; /* Espaciado interno del botón */
+        font-size: 1.5rem; /* Tamaño de fuente */
+        line-height: 1; /* Ajusta la altura de línea para centrar verticalmente el contenido */
+        color: #dc3545; /* Color del texto */
+        border: none; /* Sin borde */
+        background: none; /* Fondo transparente */
+        cursor: pointer; /* Cambia el cursor a un puntero al pasar por encima */
+        transition: color 0.3s ease; /* Transición suave del color del texto */
+    }
+    .close-button:hover {
+        color: #c82333; /* Color del texto al pasar el cursor */
+    }
+    h2 {
+        text-align: center; /* Centra el título del formulario */
+        margin-bottom: 20px; /* Espacio inferior al título */
+    }
+    button[type="submit"] {
+        width: 100%; /* Ocupa todo el ancho del botón */
+        margin-top: 10px; /* Espacio superior al botón */
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

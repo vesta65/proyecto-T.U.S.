@@ -1,0 +1,201 @@
+{% extends 'basem.html' %}
+
+{% block title %}Pedidos Asignados{% endblock %}
+
+{% block header_title %}Pedidos Asignados{% endblock %}
+
+{% block content %}
+<style>
+    .container {
+        padding: 15px;
+        margin: auto;
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+        color: #333;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .table-container {
+        max-height: 600px; /* Mayor altura para la lista de pedidos */
+        overflow-y: auto;
+        border-radius: 8px;
+        background-color: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 15px;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .table th,
+    .table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+        font-size: 14px;
+    }
+
+    .table thead {
+        background-color: #007bff;
+        color: #ffffff;
+    }
+
+    .table th {
+        font-weight: bold;
+    }
+
+    .table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+    }
+
+    .table tbody tr:hover {
+        background-color: #e2e6ea;
+    }
+
+    .btn-secondary {
+        background-color: #007bff;
+        color: #ffffff;
+        border: none;
+        border-radius: 25px;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-secondary:hover {
+        background-color: #0056b3;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-completar {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        cursor: pointer;
+        text-align: center;
+        font-size: 14px;
+        transition: background-color 0.3s;
+    }
+
+    .btn-completar:hover {
+        background-color: #218838;
+    }
+
+    .btn-info {
+        background-color: #17a2b8;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 12px;
+        text-align: center;
+        font-size: 14px;
+        transition: background-color 0.3s;
+        text-decoration: none;
+    }
+
+    .btn-info:hover {
+        background-color: #138496;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 20px;
+        text-align: center;
+        font-size: 16px;
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+        .table-container {
+            max-height: 400px; /* Reduce height for smaller devices */
+        }
+
+        .table th,
+        .table td {
+            font-size: 12px; /* Smaller font size for mobile */
+            padding: 8px; /* Reduced padding for mobile */
+        }
+
+        h2 {
+            font-size: 20px; /* Adjust title size for mobile */
+        }
+
+        .btn-primary,
+        .btn-info,
+        .btn-completar {
+            font-size: 14px;
+            padding: 8px 16px;
+        }
+    }
+</style>
+
+<div class="container">
+    <div class="mb-3 text-center">
+        <a class="btn-secondary" href="{% url 'pedidos_completados' %}">Ver Pedidos Completados</a>
+    </div>
+    <h2>Pedidos Asignados</h2>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Estado</th>
+                    <th>Origen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if pedidos %}
+                    {% for pedido in pedidos %}
+                        <tr>
+                            <td>{{ pedido.cliente.user.username }}</td>
+                            <td>{{ pedido.servicio.nombre }}</td>
+                            <td>{{ pedido.estado }}</td>
+                            <td><a href="{{ pedido.origen }}" target="_blank">Ubicación</a></td>
+                            <td>
+                                <a href="{% url 'pedido_detalle' pedido.id %}" class="btn-info">Detalles</a>
+                                {% if pedido.estado != 'Completado' %}
+                                    <form action="{% url 'marcar_pedido_completado' pedido.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn-completar">OK</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="5" class="text-center">No hay pedidos asignados.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <a class="btn-primary" href="{% url 'inicio' %}">Inicio</a>
+</div>
+{% endblock %}

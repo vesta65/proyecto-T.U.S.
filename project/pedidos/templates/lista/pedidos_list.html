@@ -1,0 +1,125 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}Lista de Pedidos{% endblock %}
+
+{% block header_title %}Lista de Pedidos{% endblock %}
+
+{% block content %}
+<style>
+    .list-container {
+        max-height: 720px; /* Ajusta la altura según sea necesario */
+        overflow-y: auto; /* Habilita el desplazamiento vertical */
+        border: 1px solid #ddd; /* Añade un borde alrededor de la lista */
+        border-radius: 5px; /* Redondea las esquinas del borde */
+        background-color: #f8f9fa; /* Fondo claro para contraste */
+        padding: 15px; /* Espaciado interno */
+    }
+
+    table {
+        width: 100%;
+        margin-bottom: 0;
+    }
+
+    th, td {
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px; /* Añade espaciado interno a las celdas */
+    }
+
+    th {
+        background-color: #343a40; /* Color de fondo para el encabezado */
+        color: white; /* Color del texto en el encabezado */
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2; /* Alterna el color de fondo de las filas */
+    }
+
+    .btn-atender {
+        margin-top: 5px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+
+    /* Clases para los estados */
+    .estado-pendiente {
+        background-color: #fff3cd; /* Color de fondo para 'pendiente' */
+        color: #856404; /* Color del texto para 'pendiente' */
+    }
+</style>
+
+    <h1 class="text-center my-4">Pedidos Entrantes</h1>
+    <div class="list-container">
+        <table class="table table-striped table-bordered" id="pedidos-table">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Servicio solicitado</th>
+                    <th>Fecha y Hora de llegada</th>
+                    <th>Estado</th>
+                    <th>Ubicación</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Las filas de la tabla se llenarán con JavaScript -->
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function actualizarPedidos() {
+            fetch('/pedidos-json/')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Datos recibidos:', data); // Verifica los datos recibidos
+        
+                    const tbody = document.querySelector('#pedidos-table tbody');
+                    tbody.innerHTML = '';  // Limpia el contenido actual
+        
+                    // Ordena los pedidos del más reciente al más antiguo
+                    data.pedidos.sort((a, b) => new Date(b.fecha_hora_inicio) - new Date(a.fecha_hora_inicio));
+        
+                    // Filtra los pedidos donde el estado sea 'pendiente' y conductor__user__username esté vacío o es null
+                    const pedidosFiltrados = data.pedidos.filter(pedido => pedido.estado === 'pendiente' && !pedido.conductor__user__username);
+        
+                    console.log('Pedidos filtrados:', pedidosFiltrados); // Verifica los pedidos filtrados
+        
+                    pedidosFiltrados.forEach(pedido => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${pedido.id}</td>
+                            <td>${pedido.cliente__user__username}</td>
+                            <td>${pedido.servicio__nombre}</td>
+                            <td>${pedido.fecha_hora_inicio}</td>
+                            <td class="estado-pendiente">${pedido.estado}</td>
+                            <td><a href="${pedido.origen}" target="_blank">${pedido.origen}</a></td>
+                            <td><a href="/atender-pedido/${pedido.id}/" class="btn btn-primary btn-sm btn-atender">Atender</a></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => console.error('Error al cargar los pedidos:', error));
+        }
+        
+        // Actualiza cada 10 segundos
+        setInterval(actualizarPedidos, 10000);
+        
+        // Actualiza inmediatamente al cargar la página
+        document.addEventListener('DOMContentLoaded', actualizarPedidos);
+    </script>
+{% endblock %}

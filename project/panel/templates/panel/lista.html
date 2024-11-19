@@ -1,0 +1,257 @@
+{% extends 'panel/base.html' %}
+
+{% load static %}
+{% block title %}Lista de Usuarios{% endblock %}
+
+{% block header_title %}Lista de Usuarios{% endblock %}
+
+{% block content %}
+<head>
+<style>
+    /* Contenedor de la tabla */
+    .container {
+        width: 100%; /* Ocupa todo el ancho disponible */
+        max-width: 1200px; /* Ancho máximo */
+        margin-top: 5rem; /* Margen superior */
+    }
+    
+    .table-container {
+        max-height: 700px;
+        overflow-y: auto;
+        overflow-x: auto; /* Habilita el desplazamiento horizontal si es necesario */
+        border: 1px solid #dee2e6;
+        border-radius: 4px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        background-color: #ffffff;
+        width: 100%; /* El contenedor ocupará todo el ancho disponible */
+    }
+    
+    .table {
+        width: 100%; /* La tabla se ajustará al ancho del contenedor */
+    }
+    
+    /* Imagen de usuario */
+    .user-list img.user-image {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: auto;
+    }
+
+    /* Botón de WhatsApp */
+    .whatsapp-btn {
+        background-color: #25D366;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        text-align: center;
+        transition: background-color 0.3s;
+    }
+
+    .whatsapp-btn:hover {
+        background-color: #128C7E;
+    }
+
+    /* Barra de búsqueda */
+    .search-bar {
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .search-bar input {
+        width: 250px;
+        margin-right: 10px;
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+    }
+
+    .search-bar button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .search-bar button:hover {
+        background-color: #0056b3;
+    }
+
+    /* Botones de acciones */
+    .btn-sm {
+        padding: 6px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+
+    .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .btn-danger:hover {
+        background-color: #c82333;
+        border-color: #bd2130;
+    }
+
+    /* Estilos adicionales para el contenedor principal */
+    .container {
+        margin-top: 20px;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilos de la tabla */
+    .table {
+        margin-bottom: 0; /* Elimina el margen inferior */
+    }
+
+    /* Botón de registro y regresar */
+    .btn-lg {
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        margin-right: 10px;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+    }
+    .container {
+        background-color: transparent;
+        /* Reset other styles if needed */
+    }
+    
+    
+</style>
+</head>
+<a class="btn btn-success btn-lg" href="{% url 'lista_usuarios_comunes' %}">Ver Clientes</a>
+<a class="btn btn-primary btn-lg" href="{% url 'lista_usuarios' %}">Ver Usuarios</a>
+<a class="btn btn-info btn-lg" href="{% url 'lista_conductores' %}">Ver Conductores</a>
+<a class="btn btn-warning btn-lg" href="{% url 'lista_vehiculos' %}">Ver Vehículos</a>
+
+
+    <a class="btn btn-success btn-lg" href="{% url 'registro' %}">Registrar Usuario Nuevo</a>
+
+    <!-- Barra de búsqueda -->
+    <form class="form-inline search-bar" method="get" action="{% url 'lista_usuarios' %}">
+        <input class="form-control mr-sm-2" type="search" placeholder="Buscar por nombre o email" aria-label="Buscar" name="q" value="{{ request.GET.q }}">
+        
+        <!-- Filtro por rol -->
+        <div class="dropdown mr-2">
+            <select class="form-control" name="rol" aria-label="Filtrar por rol">
+                <option value="">Todos los roles</option>
+                <option value="comun" {% if request.GET.rol == "comun" %}selected{% endif %}>Común</option>
+                <option value="conductor" {% if request.GET.rol == "conductor" %}selected{% endif %}>Conductor</option>
+                <option value="admin" {% if request.GET.rol == "admin" %}selected{% endif %}>Admin</option>
+            </select>
+        </div>
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+    </form>
+
+    <!-- Tabla de usuarios -->
+    <div class="table-container">
+        <div class="table-responsive user-list">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Imagen</th>
+                        <th>Username</th>
+                        <th>Nombre Completo</th>
+                        <th>Email</th>
+                        <th>Teléfono</th>
+                        <th>Rol</th>
+                        <th>Detalles Adicionales</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if usuarios %}
+                        {% for usuario in usuarios %}
+                            <tr>
+                                <td>
+                                    {% if usuario.profile_image %}
+                                        <img src="{{ usuario.profile_image.url }}" alt="Imagen de Perfil" class="user-image">
+                                    {% else %}
+                                        <img src="{% static 'images/default-profile.png' %}" alt="Imagen de Perfil" class="user-image">
+                                    {% endif %}
+                                </td>
+                                <td>{{ usuario.username }}</td>
+                                <td>{{ usuario.first_name }} {{ usuario.last_name }}</td>
+                                <td>{{ usuario.email }}</td>
+                                <td>{{ usuario.telf }}</td>
+                                <td>{{ usuario.id_rol }}</td>
+                                <td>
+                                    {% if usuario.id_rol.nombre == 'comun' %}
+                                        {% if usuario.cliente %}
+                                            <p><strong>Cédula de Identidad:</strong> {{ usuario.cliente.ci }}</p>
+                                        {% endif %}
+                                    {% elif usuario.id_rol.nombre == 'conductor' %}
+                                        {% if usuario.conductor %}
+                                            <p><strong>Número de Licencia:</strong> {{ usuario.conductor.num_lice }}</p>
+                                            <p><strong>Categoría:</strong> {{ usuario.conductor.categoria }}</p>
+                                        {% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'editar_usuario' usuario.id %}" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="{% url 'eliminar_usuario' usuario.id %}" class="btn btn-danger btn-sm">Eliminar</a>
+                                    <a href="https://wa.me/{{ usuario.telf|slice:'1:' }}" class="whatsapp-btn" target="_blank">Mensaje</a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center">No hay usuarios registrados.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Botones de acciones -->
+   
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

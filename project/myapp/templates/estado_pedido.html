@@ -1,0 +1,151 @@
+{% extends 'basem.html' %}
+
+{% block title %}Estado del Pedido{% endblock %}
+
+{% block content %}
+<style>
+    .estado-pedido-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 80vh;
+        text-align: center;
+    }
+
+    .estado-pedido-container h1 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+    }
+
+    #mensaje {
+        font-size: 1.2em;
+        color: #555;
+        margin-bottom: 20px;
+    }
+
+    .btn-cancelar {
+        background-color: #ff4d4d;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-cancelar:hover {
+        background-color: #e60000;
+    }
+
+    .btn-cancelar:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    #volver-btn {
+        display: none;
+        margin-top: 20px;
+        font-size: 16px;
+        text-decoration: none;
+        color: #007bff;
+    }
+
+    #volver-btn:hover {
+        text-decoration: underline;
+    }
+
+    /* Estilo para mostrar el motivo del rechazo */
+    #motivo-rechazo {
+        margin-top: 20px;
+        font-size: 1.2em;
+        color: #d9534f;
+        display: none; /* Oculto inicialmente */
+    }
+</style>
+
+<div class="estado-pedido-container">
+    <h1>Estado del Pedido</h1>
+    <p id="mensaje">Verificando estado...</p>
+    <p id="motivo-rechazo">Motivo de rechazo: <strong id="motivo-texto"></strong></p>
+
+    <!-- Botón para cancelar el pedido -->
+    <button id="btn-cancelar" class="btn-cancelar" onclick="cancelarPedido()">Cancelar Pedido</button>
+
+    <!-- Botón oculto que se muestra tras la cancelación -->
+    <a id="volver-btn" href="{% url 'inicio' %}">Volver a principal</a>
+</div>
+
+<script>
+    const pedido_id = "{{ pedido_id }}";  // Asegúrate de que esto esté correctamente definido
+    let tiempoRestante = 100;  // 50 segundos para la cancelación automática
+    let temporizadorCancelacion;
+
+    function verificarEstadoPedido() {
+        fetch(`/verificar_estado_pedido/${pedido_id}/`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.estado === 'En Progreso') {
+                    window.location.href = '/pedido_exito';  // Redirige si el estado es 'Completado'
+                } else if (data.estado === 'Cancelado') {
+                    document.getElementById('mensaje').textContent = 'El pedido ha sido cancelado.';
+                    document.getElementById('btn-cancelar').disabled = true;  // Desactiva el botón si ya está cancelado
+                    document.getElementById('volver-btn').style.display = 'block';  // Muestra el botón de "Volver a principal"
+                    clearInterval(temporizadorCancelacion);  // Detiene el temporizador
+                } else if (data.estado === 'Rechazado') {
+                    document.getElementById('mensaje').textContent = 'El pedido ha sido Rechazado.';
+                    document.getElementById('btn-cancelar').disabled = true;
+                    document.getElementById('volver-btn').style.display = 'block';
+                    document.getElementById('motivo-rechazo').style.display = 'block';  // Muestra el campo de motivo
+                    document.getElementById('motivo-texto').textContent = data.motivo;  // Inserta el motivo
+                    clearInterval(temporizadorCancelacion);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function cancelarPedido() {
+        fetch(`/cancelar_pedido/${pedido_id}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'  // Asegúrate de incluir el token CSRF
+            },
+            body: JSON.stringify({ estado: 'Cancelado' })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('mensaje').textContent = 'El pedido ha sido cancelado con éxito.';
+                document.getElementById('btn-cancelar').disabled = true;
+                document.getElementById('volver-btn').style.display = 'block';
+                clearInterval(temporizadorCancelacion);  // Detiene el temporizador
+            } else {
+                document.getElementById('mensaje').textContent = 'Error al cancelar el pedido.';
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    // Función para cancelar automáticamente después de 50 segundos
+    function iniciarTemporizadorCancelacion() {
+        temporizadorCancelacion = setInterval(() => {
+            tiempoRestante -= 1;
+            if (tiempoRestante <= 0) {
+                document.getElementById('mensaje').textContent = 'Tiempo de espera terminado. El pedido será cancelado automáticamente.';
+                cancelarPedido();  // Cancela el pedido automáticamente
+                clearInterval(temporizadorCancelacion);
+            }
+        }, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        verificarEstadoPedido();
+        setInterval(verificarEstadoPedido, 5000);  // Verifica cada 5 segundos
+        iniciarTemporizadorCancelacion();  // Inicia el temporizador de 50 segundos
+    });
+</script>
+
+{% endblock %}

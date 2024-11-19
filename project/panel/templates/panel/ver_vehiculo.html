@@ -1,0 +1,132 @@
+{% extends 'panel/base.html' %}
+
+{% block title %}Detalles del Vehículo{% endblock %}
+
+{% block content %}
+<style>
+    body {
+        background-color: #e9ecef; /* Cambiado para mayor contraste */
+    }
+    .container {
+        max-width: 900px;
+    }
+    .card {
+        border-radius: 10px;
+        border: 1px solid #e0e0e0;
+        background-color: #ffffff; /* Fondo blanco para la tarjeta */
+    }
+    .card-header {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        background: linear-gradient(90deg, #007bff, #0056b3); /* Gradiente en el encabezado */
+    }
+    .text-muted {
+        font-weight: 400;
+    }
+    .btn-warning {
+        background-color: #ffc107;
+        border: none;
+        transition: background-color 0.3s ease;
+    }
+    .btn-warning:hover {
+        background-color: #e0a800;
+    }
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+    .btn-success:hover {
+        background-color: #218838;
+    }
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+    .shadow {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        font-family: 'Arial', sans-serif;
+        font-weight: bold;
+        color: #333; /* Color del título */
+    }
+    p {
+        font-family: 'Arial', sans-serif;
+        font-size: 1.1rem; /* Tamaño de fuente ajustado */
+    }
+</style>
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Detalles del Vehículo</h1>
+    
+    <div class="card shadow border-light">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">{{ vehiculo.modelo }} ({{ vehiculo.placa }})</h5>
+        </div>
+        <div class="card-body text-dark">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>ID:</strong> <span class="text-muted">{{ vehiculo.id }}</span></p>
+                    <p><strong>Estado:</strong> <span class="text-muted">{{ vehiculo.estado }}</span></p>
+                    <p><strong>Color:</strong> <span class="text-muted">{{ vehiculo.color }}</span></p>
+                    <p><strong>Año:</strong> <span class="text-muted">{{ vehiculo.anio }}</span></p>
+                    <p><strong>Conductor:</strong> <span class="text-muted">{{ vehiculo.conductor.user.username }}</span></p>
+                    <p><strong>Tipo de Vehículo:</strong> <span class="text-muted">{{ vehiculo.tipo_vehiculo.nombre }}</span></p>
+
+                    <!-- Botón para cambiar el estado -->
+                    <form method="post" action="{% url 'ver_vehiculo' vehiculo.id %}">
+                        {% csrf_token %}
+                        {% if vehiculo.estado == 'activo' %}
+                            <button type="submit" class="btn btn-success btn-block mt-3">Cambiar a Inactivo</button>
+                        {% elif vehiculo.estado == 'ocupado' %}
+                            <button type="submit" class="btn btn-warning btn-block mt-3">Cambiar a Activo</button>
+                        {% elif vehiculo.estado == 'inactivo' %}
+                            <button type="submit" class="btn btn-success btn-block mt-3">Cambiar a Activo</button>
+                        {% endif %}
+                    </form>
+                </div>
+                <div class="col-md-6 text-center">
+                    <!-- Mostrar imagen del vehículo -->
+                    {% if vehiculo.imagen %}
+                        <img src="{{ vehiculo.imagen.url }}" alt="Imagen del vehículo" class="img-fluid rounded shadow" style="max-width: 250px; height: auto;" data-toggle="modal" data-target="#imagenModal">
+                    {% else %}
+                        <p class="text-danger">No hay imagen disponible.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botón Regresar -->
+    <div class="text-center mt-3">
+        <a class="btn btn-primary" href="{% url 'lista_conductores' %}">Regresar</a>
+    </div>
+</div>
+
+<!-- Modal para ver la imagen en grande -->
+<div class="modal fade" id="imagenModal" tabindex="-1" aria-labelledby="imagenModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imagenModalLabel">Imagen del Vehículo</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="{{ vehiculo.imagen.url }}" alt="Imagen del vehículo" class="img-fluid" style="max-width: 100%; height: auto;">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_css %}
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+{% endblock %}

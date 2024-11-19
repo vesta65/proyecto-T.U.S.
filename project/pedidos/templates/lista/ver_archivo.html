@@ -1,0 +1,22 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Archivo CSV - {{ nombre_archivo }}</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    
+    <div class="container mt-5">
+        <a href="{% url 'listar_archivos' %}" class="btn btn-primary mt-3">Volver a la lista</a>
+
+        <h1>Contenido del Archivo: {{ nombre_archivo }}</h1>
+        <div>
+            {{ datos|safe }}
+        </div>
+        <a href="{% url 'listar_archivos' %}" class="btn btn-primary mt-3">Volver a la lista</a>
+    </div>
+</body>
+</html>
